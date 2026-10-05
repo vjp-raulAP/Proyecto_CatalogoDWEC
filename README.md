@@ -1,1 +1,1 @@
-# Proyecto_DWEC
+# Proyecto_Catálogo_DWEC
