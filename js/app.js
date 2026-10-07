@@ -1,6 +1,6 @@
 const NOMBRE_APP = "Catálogo de repuestos de coches";
 
-const elementos = [
+const repuestos = [
     {
         id: 1, nombre: "Pastillas de freno", categoria: "Frenos", marca: "Bosch", modelo: "Volkswagen Golf", precio: 45.99, fecha: "2026-10-05"},
     {   id: 2, nombre: "Filtro de aceite", categoria: "Filtros", marca: "Mann-Filter", modelo: "Seat León", precio: 12.50, fecha: "2026-10-05"},
@@ -15,5 +15,37 @@ const elementos = [
     }
 ];
 
-console.log(`${NOMBRE_APP}: ${elementos.length} elementos cargados`);
-console.table(elementos);
+
+console.log(`${NOMBRE_APP}: ${repuestos.length} repuestos cargados`);
+console.table(repuestos);
+
+
+
+const LIMITE = 50;
+
+//listado  1 para recorrer los elementos con un for of y mostrar en consola el id, nombre y si es barato o caro según el precio comparado con la constante LIMITE.
+console.log("-------LISTADO 1-------");
+console.log("--- Todos los repuestos ---");
+
+for (const articulo of repuestos) {
+    const etiqueta = articulo.precio <= LIMITE ? "barato" : "caro";
+
+    console.log(`${articulo.id}. ${articulo.nombre} - ${etiqueta}`);
+}
+
+// listado 2 usamos un for clasico y una condicion compuesta , $$ o  || al terminar muestra cuantos  la cumplen del total.
+console.log("-------LISTADO 2-------");
+console.log("--- Filtro: frenos o baratos ---");
+
+let encontrados = 0;
+
+for (let i = 0; i < repuestos.length; i++) {
+    const articulo = repuestos[i];
+
+    if (articulo.categoria === "Frenos" || articulo.precio < 20) {
+        console.log(`${articulo.id}. ${articulo.nombre} - ${articulo.precio}€`);
+        encontrados++;
+    }
+}
+
+console.log(`${encontrados} articulos de ${repuestos.length} cumplen la condición`);
