@@ -1,6 +1,6 @@
 const NOMBRE_APP = "Catálogo de repuestos de coches";
 
-const elementos = [
+const repuestos = [
     {
         id: 1, nombre: "Pastillas de freno", categoria: "Frenos", marca: "Bosch", modelo: "Volkswagen Golf", precio: 45.99, fecha: "2026-10-05"},
     {   id: 2, nombre: "Filtro de aceite", categoria: "Filtros", marca: "Mann-Filter", modelo: "Seat León", precio: 12.50, fecha: "2026-10-05"},
@@ -14,6 +14,7 @@ const elementos = [
     {   id: 10, nombre: "Bombilla LED H7", categoria: "Iluminación", marca: "Philips", modelo: "Mercedes Clase A", precio: 34.90, fecha: "2026-10-10"
     }
 ];
+
 
 console.log(`${NOMBRE_APP}: ${elementos.length} elementos cargados`);
 console.table(elementos);
@@ -63,5 +64,6 @@ for (let i = 0; i < elementos.length; i++) {
 
     // Mostramos cuántos repuestos cumplen la condición del total.
 console.log(`${encontrados} de ${elementos.length} cumplen la condición`);
+
 
 
