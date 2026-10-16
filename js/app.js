@@ -17,3 +17,51 @@ const elementos = [
 
 console.log(`${NOMBRE_APP}: ${elementos.length} elementos cargados`);
 console.table(elementos);
+
+//Parte D. Reto 3 : tus primeros pasos
+//listado 1. Recorrer el array de elementos  con for ..of.
+
+/* Guardamos el precio límite para considerar un repuesto caro.
+   Si el precio es igual o superior a 50 €, será caro. */
+const PRECIO_CARO = 50;
+
+console.log("--- Todos los repuestos  ¿Cual es caro y cual Barato---"); 
+
+for (const elemento of elementos) {   //recorremos todos los elementos
+
+    // Utilizamos un operador ternario para calcular la etiqueta.
+    // Si el precio es >= 50 €, la etiqueta será "caro".
+    // Si no, la etiqueta será "barato".
+    const etiqueta = elemento.precio >= PRECIO_CARO ? "caro" : "barato"; 
+
+    console.log(`${elemento.id}. ${elemento.nombre} - ${elemento.precio} € (${etiqueta})`);
+}
+
+//Listado 2 . Los que cumplen esa condición (filtrar por los que cumplen la condicion con for clasico)
+
+//utilizo un for clasico y un condicionante if 
+
+console.log("--- Repuestos que cumplen la condición ---");
+let encontrados = 0;
+// Recorremos el array utilizando un for clásico.
+for (let i = 0; i < elementos.length; i++) {
+
+    // Guardamos el repuesto de la posición actual.
+    const elemento = elementos[i];
+
+    // Comprobamos si cuesta menos de 50 € y pertenence a fltros.
+    if (elemento.precio < PRECIO_CARO  && elemento.categoria == "Filtros") {
+
+        // Mostramos el nombre y el precio del repuesto.
+        console.log(`${elemento.nombre} - ${elemento.precio} €`);
+
+        // Aumentamos el contador de repuestos encontrados.
+        encontrados++;
+    }
+
+}
+
+    // Mostramos cuántos repuestos cumplen la condición del total.
+console.log(`${encontrados} de ${elementos.length} cumplen la condición`);
+
+
