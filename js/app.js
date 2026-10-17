@@ -201,3 +201,116 @@ function contarPorCategoria(lista) {
 // Llamamos a la función pasando nuestro array.
 contarPorCategoria(repuestos);
 
+//RETOS SESION 8
+//Reto2: las funciones del proyecto 
+
+//Función 1. Listar(lista)--> mostrar 1 linea x elemento con datos principales.
+
+function listar(lista) {
+
+    console.log("--- Listado de repuestos ---");
+
+    for (const elemento of lista) {
+        console.log(`${elemento.nombre} - ${elemento.categoria} - ${elemento.precio} €`);
+    }
+}
+
+// Llamamos a la función.
+listar(repuestos);
+
+//Función 2. Buscar respuestas por texto.
+function buscarPorTexto(lista,texto){
+    //convertimos el texto buscado en minusculas
+
+    const buscado = texto.toLowerCase()
+
+    //creamos un array vacio donde guardamos los resultados
+
+    const resultado = [];
+
+    //recorremos los elementos
+    for(const repuesto of lista){
+        if(repuesto.nombre.toLowerCase().includes(buscado)){
+            resultado.push(repuesto)  //introducimos ne el array el repuesto encntrado
+        }
+    } 
+    return resultado;
+}
+
+//llamamoa a la función buscando "filtro"
+
+const encontradoTexto = buscarPorTexto(repuestos,"filtro");
+console.log("---Resultado de la busqueda----");
+console.table(encontradoTexto);
+
+//Funcion 3. añadir(lista,elemento)--> Calcular mayor id 
+
+
+
+function anadir(lista, elemento) {
+
+    // Buscamos el ID más alto.
+    let idMayor = 0;
+
+    for (const repuesto of lista) {
+        if (repuesto.id > idMayor) {
+            idMayor = repuesto.id;
+        }
+    }
+
+    // Asignamos el siguiente ID al nuevo repuesto.
+    elemento.id = idMayor + 1;
+    console.log("ID asignado al nuevo repuesto:", elemento.id);
+    // Añadimos el repuesto a la lista.
+    lista.push(elemento);
+
+    // Devolvemos el ID asignado.
+    return elemento.id;
+}
+
+const nuevoId = anadir(repuestos, {
+   
+    nombre: "Espejo retrovisor",
+    categoria: "Carrocería",
+    marca: "Valeo",
+    modelo: "Seat Ibiza",
+    precio: 39.99,
+    fecha: "2026-10-17"
+});
+console.log("---Nuevo id añadido----");
+
+// Mostramos únicamente el último repuesto.
+console.log("Último repuesto añadido:");
+console.log(repuestos[repuestos.length - 1]);
+console.log("ID del nuevo repuesto:", nuevoId);
+console.table(repuestos);
+
+// FUNCIÓN 4. Eliminar un repuesto por su ID.
+function eliminarPorId(lista, id) {
+
+    // Recorremos la lista con un for clásico.
+    for (let i = 0; i < lista.length; i++) {
+
+        // Comprobamos si el ID coincide.
+        if (lista[i].id === id) {
+
+            // Eliminamos el repuesto encontrado.
+            lista.splice(i, 1);
+
+            // Devolvemos true porque se ha eliminado.
+            return true;
+        }
+    }
+
+    // Si no encontramos el ID, devolvemos false.
+    return false;
+}
+
+// Eliminamos el repuesto con ID 3.
+console.log(eliminarPorId(repuestos, 3));  // true
+
+// Intentamos eliminar un ID que no existe.
+console.log(eliminarPorId(repuestos, 55)); // false
+
+// Mostramos la lista actualizada.
+console.table(repuestos);
