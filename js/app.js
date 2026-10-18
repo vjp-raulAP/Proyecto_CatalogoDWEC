@@ -204,7 +204,7 @@ contarPorCategoria(repuestos);
 //RETOS SESION 8
 //Reto2: las funciones del proyecto 
 
-//Función 1. Listar(lista)--> mostrar 1 linea x elemento con datos principales.
+//FUNCION 1. Listar(lista)--> mostrar 1 linea x elemento con datos principales.
 
 function listar(lista) {
 
@@ -218,7 +218,7 @@ function listar(lista) {
 // Llamamos a la función.
 listar(repuestos);
 
-//Función 2. Buscar respuestas por texto.
+//FUNCION 2. Buscar respuestas por texto.
 function buscarPorTexto(lista,texto){
     //convertimos el texto buscado en minusculas
 
@@ -243,7 +243,7 @@ const encontradoTexto = buscarPorTexto(repuestos,"filtro");
 console.log("---Resultado de la busqueda----");
 console.table(encontradoTexto);
 
-//Funcion 3. añadir(lista,elemento)--> Calcular mayor id 
+//FUNCION 3. añadir(lista,elemento)--> Calcular mayor id 
 
 
 
@@ -314,3 +314,85 @@ console.log(eliminarPorId(repuestos, 55)); // false
 
 // Mostramos la lista actualizada.
 console.table(repuestos);
+
+
+//PARTE C 
+//Reto3. Estadísticas de lso repuestos
+
+function estadisticas(lista) {
+
+    // Comprobamos si la lista está vacía.
+    if (lista.length === 0) {
+        console.warn("No hay repuestos para calcular las estadísticas.");
+        return;
+    }
+
+    // Inicializamos la suma y el repuesto más caro.
+    let suma = 0;
+    let maximo = lista[0];
+
+    // Recorremos todos los repuestos.
+    for (const repuesto of lista) {
+
+        // Sumamos el precio del repuesto.
+        suma = suma + repuesto.precio;
+
+        // Comprobamos si es más caro que el máximo actual.
+        if (repuesto.precio > maximo.precio) {
+            maximo = repuesto;
+        }
+    }
+
+    // Calculamos el precio medio.
+    const media = suma / lista.length;
+
+    // Mostramos los resultados.
+    console.log("--- Estadísticas de los repuestos ---");
+    console.log(`Precio total: ${suma.toFixed(2)} €`);
+    console.log(`Precio medio: ${media.toFixed(1)} €`);
+    console.log(`Repuesto más caro: ${maximo.nombre} (${maximo.precio} €)`);
+}
+
+// Probamos la función con el catálogo.
+estadisticas(repuestos);
+
+function estadisticas(lista) {
+
+    // Comprobamos si la lista está vacía.
+    if (lista.length === 0) {
+        console.warn("No hay repuestos para calcular las estadísticas.");
+        return;
+    }
+
+    // Inicializamos la suma y el repuesto más caro.
+    let suma = 0;
+    let maximo = lista[0];
+
+    // Recorremos todos los repuestos.
+    for (const repuesto of lista) {
+
+        // Sumamos el precio del repuesto.
+        suma = suma + repuesto.precio;
+
+        // Comprobamos si es más caro que el máximo actual.
+        if (repuesto.precio > maximo.precio) {
+            maximo = repuesto;
+        }
+    }
+
+    // Calculamos el precio medio.
+    const media = suma / lista.length;
+
+    // Mostramos los resultados.
+    console.log("--- Estadísticas de los repuestos ---");
+    console.log(`Precio total: ${suma.toFixed(2)} €`);  //suma el total con dos decimales.
+    console.log(`Precio medio: ${media.toFixed(1)} €`); //suma el toal con un decimal
+    console.log(`Repuesto más caro: ${maximo.nombre} (${maximo.precio} €)`);
+}
+
+// Probamos la función con el catálogo.
+estadisticas(repuestos);
+
+// Comprobamos qué ocurre con una lista vacía.
+console.log("-----Prueba con lista vacia----")
+estadisticas([]);
