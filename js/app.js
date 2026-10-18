@@ -24,6 +24,8 @@ console.table(repuestos);
 
 /* Guardamos el precio límite para considerar un repuesto caro.
    Si el precio es igual o superior a 50 €, será caro. */
+console.log("listado 1. Recorrer el array de elementos  con for ..of");
+
 const PRECIO_CARO = 50;
 
 console.log("--- Todos los repuestos  ¿Cual es caro y cual Barato---"); 
@@ -37,11 +39,11 @@ for (const elemento of repuestos) {   //recorremos todos los elementos
 
     console.log(`${elemento.id}. ${elemento.nombre} - ${elemento.precio} € (${etiqueta})`);
 }
-
+console.log("-----------------------------------------------------------");
 //Listado 2 . Los que cumplen esa condición (filtrar por los que cumplen la condicion con for clasico)
 
 //utilizo un for clasico y un condicionante if 
-
+console.log("Listado 2 . Los que cumplen esa condición");
 console.log("--- Repuestos que cumplen la condición ---");
 let encontrados = 0;
 // Recorremos el array utilizando un for clásico.
@@ -65,9 +67,12 @@ for (let i = 0; i < repuestos.length; i++) {
     // Mostramos cuántos repuestos cumplen la condición del total.
 console.log(`${encontrados} de ${repuestos.length} cumplen la condición`);
 
+console.log("---------------------------------------------------");
+console.log("PARTE B. RETO 2: LISTADOS COMO FUNCIONES");
+console.log("---------------------------------------------------");
 
-/* PARTE B. RETO 2: LISTADOS COMO FUNCIONES */
 
+console.log("Función 1. listar todos");
 //Función 1 listar todos:
 // Esta función recibe el array de repuestos como parámetro.
 function listarTodos(lista) {
@@ -94,9 +99,9 @@ function listarTodos(lista) {
 
 //llamada a la funcion y le paso por parametro el array
 listarTodos(repuestos);
-
+console.log("---------------------------------------------------------");
 //Funcion 2 filtrar (con lista y límite)
-
+console.log("Funcion 2. filtrar (con lista y límite)");
 // Recibe la colección y el límite de precio.
 function filtrar(lista, limite) {
 
@@ -132,10 +137,10 @@ console.log(`Total encontrados: ${total1}`);
 
 const total2 = filtrar(repuestos, 30);
 console.log(`Total encontrados: ${total2}`);
-
+console.log("---------------------------------------------------------");
 
 //FUNCIÓN 3. Contar repuestos por categoría.
-
+console.log("Funcion 3. Contar repuestos por categoría");
 function contarPorCategoria(lista) {
 
     // Creamos un contador para cada categoría.
@@ -200,15 +205,18 @@ function contarPorCategoria(lista) {
 
 // Llamamos a la función pasando nuestro array.
 contarPorCategoria(repuestos);
+console.log("---------------------------------------------------------");
 
+console.log("RETOS SESION 8.");
 //RETOS SESION 8
 //Reto2: las funciones del proyecto 
 
+console.log("Funcion 1. listar(lista)")
 //FUNCION 1. Listar(lista)--> mostrar 1 linea x elemento con datos principales.
 
 function listar(lista) {
 
-    console.log("--- Listado de repuestos ---");
+    
 
     for (const elemento of lista) {
         console.log(`${elemento.nombre} - ${elemento.categoria} - ${elemento.precio} €`);
@@ -216,8 +224,11 @@ function listar(lista) {
 }
 
 // Llamamos a la función.
+console.log("--- Listado de repuestos ---");
 listar(repuestos);
+console.log("---------------------------------------------------------");
 
+console.log("Funcion 2. buscarPorTexto(lista,texto)");
 //FUNCION 2. Buscar respuestas por texto.
 function buscarPorTexto(lista,texto){
     //convertimos el texto buscado en minusculas
@@ -242,10 +253,12 @@ function buscarPorTexto(lista,texto){
 const encontradoTexto = buscarPorTexto(repuestos,"filtro");
 console.log("---Resultado de la busqueda----");
 console.table(encontradoTexto);
+console.log("---------------------------------------------------------");
+
 
 //FUNCION 3. añadir(lista,elemento)--> Calcular mayor id 
 
-
+console.log("Funcion 3. anadir(lista, elemento)");
 
 function anadir(lista, elemento) {
 
@@ -285,7 +298,10 @@ console.log(repuestos[repuestos.length - 1]);
 console.log("ID del nuevo repuesto:", nuevoId);
 console.table(repuestos);
 
+console.log("---------------------------------------------------------");
 // FUNCIÓN 4. Eliminar un repuesto por su ID.
+console.log("Funcion 4. eliminarPorId(lista, id)");
+
 function eliminarPorId(lista, id) {
 
     // Recorremos la lista con un for clásico.
@@ -296,65 +312,35 @@ function eliminarPorId(lista, id) {
 
             // Eliminamos el repuesto encontrado.
             lista.splice(i, 1);
-
+             console.log(`El artículo con ID ${id} se ha eliminado correctamente`);
             // Devolvemos true porque se ha eliminado.
             return true;
+            
         }
     }
 
     // Si no encontramos el ID, devolvemos false.
+    console.log(`No se ha encontrado el repuesto con el ID ${id}. `);
     return false;
 }
 
 // Eliminamos el repuesto con ID 3.
+console.log("prueba eliminando un articulo con id");
 console.log(eliminarPorId(repuestos, 3));  // true
 
 // Intentamos eliminar un ID que no existe.
+console.log("prueba eliminando un articulo con id que no exista");
 console.log(eliminarPorId(repuestos, 55)); // false
 
 // Mostramos la lista actualizada.
 console.table(repuestos);
 
+console.log("---------------------------------------------------------");
 
+console.log("Reto 3. PARTE C");
 //PARTE C 
 //Reto3. Estadísticas de lso repuestos
-
-function estadisticas(lista) {
-
-    // Comprobamos si la lista está vacía.
-    if (lista.length === 0) {
-        console.warn("No hay repuestos para calcular las estadísticas.");
-        return;
-    }
-
-    // Inicializamos la suma y el repuesto más caro.
-    let suma = 0;
-    let maximo = lista[0];
-
-    // Recorremos todos los repuestos.
-    for (const repuesto of lista) {
-
-        // Sumamos el precio del repuesto.
-        suma = suma + repuesto.precio;
-
-        // Comprobamos si es más caro que el máximo actual.
-        if (repuesto.precio > maximo.precio) {
-            maximo = repuesto;
-        }
-    }
-
-    // Calculamos el precio medio.
-    const media = suma / lista.length;
-
-    // Mostramos los resultados.
-    console.log("--- Estadísticas de los repuestos ---");
-    console.log(`Precio total: ${suma.toFixed(2)} €`);
-    console.log(`Precio medio: ${media.toFixed(1)} €`);
-    console.log(`Repuesto más caro: ${maximo.nombre} (${maximo.precio} €)`);
-}
-
-// Probamos la función con el catálogo.
-estadisticas(repuestos);
+console.log("Funcion 5. estadisticas(lista)");
 
 function estadisticas(lista) {
 
@@ -390,7 +376,7 @@ function estadisticas(lista) {
     console.log(`Repuesto más caro: ${maximo.nombre} (${maximo.precio} €)`);
 }
 
-// Probamos la función con el catálogo.
+// Probamos llamada a la función con el catálogo.
 estadisticas(repuestos);
 
 // Comprobamos qué ocurre con una lista vacía.
