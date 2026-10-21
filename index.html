@@ -1,16 +1,36 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <title>Título</title>
+    <meta charset="UTF-8">
+    <title>Catálogo de repuestos</title>
+
+    <!-- Hoja de estilos -->
+    <link rel="stylesheet" href="./css/estilos.css">
+
+    <!-- JavaScript -->
+    <script src="./js/app.js" defer></script>
 </head>
 <body>
-     <h1>Catálogo de repuestos de coche</h1>
+
+    <h1>Catálogo de repuestos de coche</h1>
 
     <p>
         Aplicación para gestionar un catálogo de repuestos de coche.
     </p>
 
-    <script src="./js/app.js" defer></script>  <!-- defer para que se ejecute script cuando la pagina ya está cargada-->
+    <!-- Resumen del catálogo -->
+    <section>
+        <h2>Resumen</h2>
+        <p id="resumen"></p>
+        <p id="estadisticas"></p>
+    </section>
+
+    <!-- Aquí aparecerán las tarjetas -->
+    <section>
+        <h2>Listado de repuestos</h2>
+        <div id="listado"></div>
+    </section>
+
 </body>
 </html>

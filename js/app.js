@@ -250,7 +250,7 @@ function buscarPorTexto(lista,texto){
 
 //llamamoa a la función buscando "filtro"
 
-const encontradoTexto = buscarPorTexto(repuestos,"filtro");
+const encontradoTexto = buscarPorTexto(repuestos,"corre");
 console.log("---Resultado de la busqueda----");
 console.table(encontradoTexto);
 console.log("---------------------------------------------------------");
@@ -382,3 +382,55 @@ estadisticas(repuestos);
 // Comprobamos qué ocurre con una lista vacía.
 console.log("-----Prueba con lista vacia----")
 estadisticas([]);
+
+
+
+
+
+//SPRINT 1.  PINTAR COLECCION
+
+
+//Creo un contenedor donde aparecen nuestras tarjetas
+const listado = document.querySelector("#listado");
+
+
+//Función para crear una tarjeta de un repuesto
+function crearTarjeta(repuesto) {
+    //creamos el elemento article
+    const tarjeta = document.createElement("article");
+    //añadir css a la tarjeta para dar formato
+    tarjeta.classList.add("tarjeta");
+    //creamos el titulo de la tarjeta
+    const titulo = document.createElement("h3");
+    titulo.textContent = repuesto.categoria;
+
+    const datos = document.createElement("p");
+      datos.textContent = `${repuesto.nombre} · ${repuesto.marca} · ${repuesto.precio} € `; 
+
+    tarjeta.append(titulo, datos);
+
+    return tarjeta;
+}
+
+function pintar(lista) {
+    listado.replaceChildren();
+
+    for (const repuesto of lista) {
+        listado.append(crearTarjeta(repuesto));
+    }
+}
+
+pintar(repuestos);
+
+function pintar(lista) {
+    listado.replaceChildren();
+
+    for (const repuesto of lista) {
+        listado.append(crearTarjeta(repuesto));
+    }
+
+    document.querySelector("#resumen").textContent =
+        "Total de repuestos: " + lista.length;
+    
+    document.querySelector("#estadisticas").textContent = texto;
+}
