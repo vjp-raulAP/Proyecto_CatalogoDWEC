@@ -394,7 +394,7 @@ estadisticas([]);
 const listado = document.querySelector("#listado");
 
 
-//Función para crear una tarjeta de un repuesto
+//Función para crear una tarjeta de un repuesto recibiendo repuesto como parametro
 function crearTarjeta(repuesto) {
     //creamos el elemento article
     const tarjeta = document.createElement("article");
@@ -403,18 +403,21 @@ function crearTarjeta(repuesto) {
     //creamos el titulo de la tarjeta
     const titulo = document.createElement("h3");
     titulo.textContent = repuesto.categoria;
-
+    // Crear el separador horizontal
+    const separador = document.createElement("hr");
+     // Creo un párrafo HTML <p> para mostrar los datos del repuesto.
     const datos = document.createElement("p");
       datos.textContent = `${repuesto.nombre} · ${repuesto.marca} · ${repuesto.precio} € `; 
-
-    tarjeta.append(titulo, datos);
-
+    // Añado el título y el párrafo dentro de la tarjeta.
+    tarjeta.append(titulo,separador, datos);
+     // Devuelvo la tarjeta creada para poder utilizarla fuera
     return tarjeta;
 }
-
+// Función para pintar una lista de repuestos en la página.
 function pintar(lista) {
+     // Borro el contenido anterior del contenedor.
     listado.replaceChildren();
-
+           
     for (const repuesto of lista) {
         listado.append(crearTarjeta(repuesto));
     }
@@ -424,13 +427,16 @@ pintar(repuestos);
 
 function pintar(lista) {
     listado.replaceChildren();
-
+    // Creo una tarjeta para cada repuesto
     for (const repuesto of lista) {
         listado.append(crearTarjeta(repuesto));
     }
-
+    // Busco el elemento HTML con id="resumen"
     document.querySelector("#resumen").textContent =
         "Total de repuestos: " + lista.length;
-    
+    // Busco el elemento HTML con id="estadisticas"
     document.querySelector("#estadisticas").textContent = texto;
 }
+// Ejecuto la función pintar() y le paso la colección de repuestos.
+pintar(repuestos);
+

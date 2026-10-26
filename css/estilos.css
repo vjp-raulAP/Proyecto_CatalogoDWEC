@@ -15,5 +15,12 @@ body {
     background: lightgray;
     padding: 1rem;
     border-radius: 8px;
-    box-shadow: 0 1px 4px #0003;
+   
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.20);
+     /* Transición suave */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.tarjeta:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
 }
