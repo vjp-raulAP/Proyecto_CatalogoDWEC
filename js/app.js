@@ -388,42 +388,77 @@ estadisticas([]);
 
 
  // SPRINT 1. PINTAR COLECCION
-
-// Buscamos el contenedor donde aparecerán las tarjetas.
 const listado = document.querySelector("#listado");
+ // Función para crear una tarjeta de una categoría.
+function crearTarjetaRepuesto(categoria, listaRepuestos) {
 
-// Función para crear una tarjeta de un repuesto.
-function crearTarjetaRepuesto(repuesto) {
+    // Creamos la tarjeta.
     const tarjeta = document.createElement("article");
     tarjeta.classList.add("tarjeta");
 
+    // Creamos el título con el nombre de la categoría.
     const titulo = document.createElement("h3");
-    titulo.textContent = repuesto.categoria;
+    titulo.textContent = categoria;
 
-    const separador = document.createElement("hr");
+    tarjeta.append(titulo);
 
-    const datos = document.createElement("p");
-    datos.textContent =
-        `${repuesto.nombre} · ${repuesto.marca} · ${repuesto.precio} €`;
+    // Recorremos los repuestos de esa categoría.
+    for (const repuesto of listaRepuestos) {
 
-    tarjeta.append(titulo, separador, datos);
+        // Creamos un separador.
+        const separador = document.createElement("hr");
+
+        // Creamos un párrafo con los datos del repuesto.
+        const datos = document.createElement("p");
+        datos.textContent =
+            `${repuesto.nombre} · ${repuesto.marca} · ${repuesto.precio} €`;
+
+        // Añadimos los datos a la tarjeta.
+        tarjeta.append(separador, datos);
+    }
 
     return tarjeta;
 }
 
-// Función para mostrar los repuestos en la página.
+
+// Función para mostrar los repuestos agrupados por categoría.
 function mostrarRepuestos(lista) {
+
+    // Vaciamos el contenedor de tarjetas.
     listado.replaceChildren();
 
+    // Creamos un objeto para guardar las categorías.
+    const categorias = {};
+
+    // Agrupamos los repuestos por categoría.
     for (const repuesto of lista) {
-        listado.append(crearTarjetaRepuesto(repuesto));
+
+        // Si la categoría no existe, creamos una lista vacía.
+        if (!categorias[repuesto.categoria]) {
+            categorias[repuesto.categoria] = [];
+        }
+
+        // Añadimos el repuesto a su categoría.
+        categorias[repuesto.categoria].push(repuesto);
     }
 
+    // Recorremos las categorías.
+    for (const categoria in categorias) {
+
+        // Creamos una tarjeta con todos los repuestos de esa categoría.
+        const tarjeta = crearTarjetaRepuesto(categoria,categorias[categoria]);
+
+        // Añadimos la tarjeta al HTML.
+        listado.append(tarjeta);
+    }
+
+    // Mostramos el número total de repuestos.
     document.querySelector("#resumen").textContent =
         "Total de repuestos: " + lista.length;
 
+    // Mostramos las estadísticas.
     document.querySelector("#estadisticas").textContent =
-        "Catálogo de repuestos";
+        "Categorías: " + Object.keys(categorias).length;
 }
 
 // RETO 2. BUSCADOR Y ORDENACIÓN
@@ -462,6 +497,9 @@ function actualizarListado() {
     listaFiltrada = ordenarRepuestos(listaFiltrada, criterioOrdenacion);
 
     mostrarRepuestos(listaFiltrada);
+
+      // Mostramos el resumen después de pintar.
+    pintarResumen(listaFiltrada.length);
 }
 // Buscamos los controles del HTML.
 const buscadorReto2 = document.querySelector("#buscador");
@@ -487,7 +525,7 @@ botonPrecioReto2.addEventListener("click", function () {
 });
 
 // Mostramos todos los repuestos al iniciar.
-mostrarRepuestos(repuestos);
+actualizarListado();
 
 // Muestra un resumen de los repuestos que aparecen
 function pintarResumen(mostrados) {
@@ -500,3 +538,4 @@ function pintarResumen(mostrados) {
         resumen.textContent = "No hay recetas que contengan «xyz»";
     }
 }
+ 
