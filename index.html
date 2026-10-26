@@ -1,8 +1,9 @@
-
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catálogo de repuestos</title>
 
     <!-- Hoja de estilos -->
@@ -18,6 +19,21 @@
     <p>
         Aplicación para gestionar un catálogo de repuestos de coche.
     </p>
+
+    <!-- Buscador y botones para ordenar -->
+    <section class="controles">
+
+        <input id="buscador" type="search" placeholder="Buscar...">
+
+        <button id="ordenNombre" type="button">
+            Ordenar A-Z
+        </button>
+
+        <button id="ordenPrecio" type="button">
+            Ordenar por precio
+        </button>
+
+    </section>
 
     <!-- Resumen del catálogo -->
     <section>

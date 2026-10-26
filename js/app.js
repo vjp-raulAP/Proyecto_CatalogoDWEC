@@ -387,56 +387,104 @@ estadisticas([]);
 
 
 
-//SPRINT 1.  PINTAR COLECCION
+ // SPRINT 1. PINTAR COLECCION
 
-
-//Creo un contenedor donde aparecen nuestras tarjetas
+// Buscamos el contenedor donde aparecerán las tarjetas.
 const listado = document.querySelector("#listado");
 
-
-//Función para crear una tarjeta de un repuesto recibiendo repuesto como parametro
-function crearTarjeta(repuesto) {
-    //creamos el elemento article
+// Función para crear una tarjeta de un repuesto.
+function crearTarjetaRepuesto(repuesto) {
     const tarjeta = document.createElement("article");
-    //añadir css a la tarjeta para dar formato
     tarjeta.classList.add("tarjeta");
-    //creamos el titulo de la tarjeta
+
     const titulo = document.createElement("h3");
     titulo.textContent = repuesto.categoria;
-    // Crear el separador horizontal
+
     const separador = document.createElement("hr");
-     // Creo un párrafo HTML <p> para mostrar los datos del repuesto.
+
     const datos = document.createElement("p");
-      datos.textContent = `${repuesto.nombre} · ${repuesto.marca} · ${repuesto.precio} € `; 
-    // Añado el título y el párrafo dentro de la tarjeta.
-    tarjeta.append(titulo,separador, datos);
-     // Devuelvo la tarjeta creada para poder utilizarla fuera
+    datos.textContent =
+        `${repuesto.nombre} · ${repuesto.marca} · ${repuesto.precio} €`;
+
+    tarjeta.append(titulo, separador, datos);
+
     return tarjeta;
 }
-// Función para pintar una lista de repuestos en la página.
-function pintar(lista) {
-     // Borro el contenido anterior del contenedor.
-    listado.replaceChildren();
-           
-    for (const repuesto of lista) {
-        listado.append(crearTarjeta(repuesto));
-    }
-}
 
-pintar(repuestos);
-
-function pintar(lista) {
+// Función para mostrar los repuestos en la página.
+function mostrarRepuestos(lista) {
     listado.replaceChildren();
-    // Creo una tarjeta para cada repuesto
+
     for (const repuesto of lista) {
-        listado.append(crearTarjeta(repuesto));
+        listado.append(crearTarjetaRepuesto(repuesto));
     }
-    // Busco el elemento HTML con id="resumen"
+
     document.querySelector("#resumen").textContent =
         "Total de repuestos: " + lista.length;
-    // Busco el elemento HTML con id="estadisticas"
-    document.querySelector("#estadisticas").textContent = texto;
-}
-// Ejecuto la función pintar() y le paso la colección de repuestos.
-pintar(repuestos);
 
+    document.querySelector("#estadisticas").textContent =
+        "Catálogo de repuestos";
+}
+
+// RETO 2. BUSCADOR Y ORDENACIÓN
+
+let textoBuscado = "";
+let criterioOrdenacion = "ninguno";
+
+
+
+// Función para ordenar los repuestos.
+function ordenarRepuestos(lista, criterio) {
+    const copia = [...lista];
+
+    if (criterio === "nombre") {
+        copia.sort((a, b) => a.nombre.localeCompare(b.nombre));
+    }
+
+    if (criterio === "precio") {
+        copia.sort((a, b) => b.precio - a.precio);
+    }
+
+    return copia;
+}
+
+// Función para buscar repuestos por nombre.
+function buscarRepuestos(lista, texto) {
+    return lista.filter(repuesto =>
+        repuesto.nombre.toLowerCase().includes(texto.toLowerCase())
+    );
+}
+
+// Función para actualizar el listado.
+function actualizarListado() {
+    let listaFiltrada = buscarRepuestos(repuestos, textoBuscado);
+
+    listaFiltrada = ordenarRepuestos(listaFiltrada, criterioOrdenacion);
+
+    mostrarRepuestos(listaFiltrada);
+}
+// Buscamos los controles del HTML.
+const buscadorReto2 = document.querySelector("#buscador");
+const botonNombreReto2 = document.querySelector("#ordenNombre");
+const botonPrecioReto2 = document.querySelector("#ordenPrecio");
+
+// Buscamos mientras escribimos.
+buscadorReto2.addEventListener("input", function () {
+    textoBuscado = buscadorReto2.value;
+    actualizarListado();
+});
+
+// Ordenamos por nombre.
+botonNombreReto2.addEventListener("click", function () {
+    criterioOrdenacion = "nombre";
+    actualizarListado();
+});
+
+// Ordenamos por precio.
+botonPrecioReto2.addEventListener("click", function () {
+    criterioOrdenacion = "precio";
+    actualizarListado();
+});
+
+// Mostramos todos los repuestos al iniciar.
+mostrarRepuestos(repuestos);
