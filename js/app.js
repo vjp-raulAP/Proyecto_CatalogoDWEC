@@ -488,3 +488,15 @@ botonPrecioReto2.addEventListener("click", function () {
 
 // Mostramos todos los repuestos al iniciar.
 mostrarRepuestos(repuestos);
+
+// Muestra un resumen de los repuestos que aparecen
+function pintarResumen(mostrados) {
+
+    const resumen = document.querySelector("#resumen");
+
+    if (mostrados > 0) {
+        resumen.textContent = `Mostrando ${mostrados} de ${repuestos.length} recetas`;
+    } else {
+        resumen.textContent = "No hay recetas que contengan «xyz»";
+    }
+}
