@@ -346,7 +346,8 @@ function estadisticas(lista) {
 
     // Comprobamos si la lista está vacía.
     if (lista.length === 0) {
-        return null;
+        console.warn("No hay repuestos para calcular las estadísticas.");
+        return;
     }
 
     // Inicializamos la suma y el repuesto más caro.
@@ -368,14 +369,12 @@ function estadisticas(lista) {
     // Calculamos el precio medio.
     const media = suma / lista.length;
 
-    // Devolvemos un objeto con las estadísticas.
-    return {
-        total: suma,
-        media: media,
-        maximo: maximo
-    };
+    // Mostramos los resultados.
+    console.log("--- Estadísticas de los repuestos ---");
+    console.log(`Precio total: ${suma.toFixed(2)} €`);  //suma el total con dos decimales.
+    console.log(`Precio medio: ${media.toFixed(1)} €`); //suma el toal con un decimal
+    console.log(`Repuesto más caro: ${maximo.nombre} (${maximo.precio} €)`);
 }
-
 
 // Probamos llamada a la función con el catálogo.
 estadisticas(repuestos);
@@ -384,115 +383,94 @@ estadisticas(repuestos);
 console.log("-----Prueba con lista vacia----")
 estadisticas([]);
 
-// Función para mostrar las estadísticas en la página.
-function pintarEstadisticas(lista) {
-
-    // Obtenemos las estadísticas.
-    const resultado = estadisticas(lista);
-
-    // Buscamos el elemento donde mostraremos los resultados.
-    const elemento = document.querySelector("#estadisticas");
-
-    // Comprobamos si hay repuestos.
-    if (resultado === null) {
-        elemento.textContent = "No hay repuestos para mostrar estadísticas.";
-        return;
-    }
-
-    // Mostramos las estadísticas en una sola línea.
-    elemento.textContent = `Precio total: ${resultado.total.toFixed(2)} € | Precio medio: ${resultado.media.toFixed(2)} € | Repuesto más caro: ${resultado.maximo.nombre} (${resultado.maximo.precio.toFixed(2)} €)`;
-}
 
 
 
- // ==========================================
-// SPRINT 1 - SESIÓN 10 
-// RETO 2: TU COLECCIÓN EN LA PÁGINA
-// ==========================================
-// Días que consideramos para marcar un repuesto como reciente.
-const DIAS_RECIENTE = 30;
-// Seleccionamos el contenedor donde aparecerán las tarjetas.
+
+ // SPRINT 1. PINTAR COLECCION
 const listado = document.querySelector("#listado");
- // Función para crear una tarjeta de un repuesto.
-function crearTarjetaRepuesto(repuesto) {
+ // Función para crear una tarjeta de una categoría.
+function crearTarjetaRepuesto(categoria, listaRepuestos) {
 
     // Creamos la tarjeta.
     const tarjeta = document.createElement("article");
     tarjeta.classList.add("tarjeta");
 
-        // Creamos el título con el nombre del repuesto.
-        const titulo = document.createElement("h3");
-        titulo.textContent = repuesto.nombre;
+    // Creamos el título con el nombre de la categoría.
+    const titulo = document.createElement("h3");
+    titulo.textContent = categoria;
+
+    tarjeta.append(titulo);
+
+    // Recorremos los repuestos de esa categoría.
+    for (const repuesto of listaRepuestos) {
+
         // Creamos un separador.
         const separador = document.createElement("hr");
-        // Creamos los datos del repuesto.
-        
+
         const datos = document.createElement("p");
-      
-        
-        datos.textContent =`Categoría: ${repuesto.categoria}
-         Marca: ${repuesto.marca}
-         Modelo: ${repuesto.modelo}`;
+        datos.textContent =
+            `${repuesto.nombre} · ${repuesto.marca} · ${repuesto.precio} €`;
 
-        // Creamos el precio.
-        const precio = document.createElement("p");
-        precio.textContent = `Precio = ${repuesto.precio} €`;
+        // Creamos el párrafo de la fecha.
+        const fecha = document.createElement("p");
+        fecha.classList.add("fecha");
+        fecha.textContent = fechaLegible(repuesto.fecha);
 
-    // Creamos la fecha.
-    const fecha = document.createElement("p");
-    fecha.classList.add("fecha");
-    fecha.textContent = fechaLegible(repuesto.fecha);
+        // Comprobamos si el repuesto es reciente.
+        if (diasDesde(repuesto.fecha) <= DIAS_RECIENTE) {
+            tarjeta.classList.add("reciente");
+        }
 
-    // Comprobamos si el repuesto es reciente.
-    if (diasDesde(repuesto.fecha) <= DIAS_RECIENTE) {
-        tarjeta.classList.add("reciente");
+        // Añadimos los elementos a la tarjeta.
+        tarjeta.append(separador, datos, fecha);
     }
-
-    // Añadimos los elementos a la tarjeta.
-    tarjeta.append(titulo,separador, datos, precio, fecha);
 
     return tarjeta;
 }
 
-// Función para mostrar los repuestos.
+
+// Función para mostrar los repuestos agrupados por categoría.
 function mostrarRepuestos(lista) {
 
     // Vaciamos el contenedor de tarjetas.
     listado.replaceChildren();
 
-    // Comprobamos si la lista está vacía.
-    if (lista.length === 0) {
+    // Creamos un objeto para guardar las categorías.
+    const categorias = {};
 
-        // Creamos un párrafo con el mensaje.
-        const mensaje = document.createElement("p");
-        mensaje.textContent = "No hay repuestos que coincidan con la búsqueda.";
+    // Agrupamos los repuestos por categoría.
+    for (const repuesto of lista) {
 
-        // Añadimos el mensaje al listado.
-        listado.append(mensaje);
-
-    } else {
-
-        // Recorremos todos los repuestos.
-        for (const repuesto of lista) {
-
-            // Creamos una tarjeta para cada repuesto.
-            const tarjeta = crearTarjetaRepuesto(repuesto);
-
-            // Añadimos la tarjeta al listado.
-            listado.append(tarjeta);
+        // Si la categoría no existe, creamos una lista vacía.
+        if (!categorias[repuesto.categoria]) {
+            categorias[repuesto.categoria] = [];
         }
+
+        // Añadimos el repuesto a su categoría.
+        categorias[repuesto.categoria].push(repuesto);
     }
 
-    // Actualizamos las estadísticas.
-    pintarEstadisticas(lista);
+    // Recorremos las categorías.
+    for (const categoria in categorias) {
+
+        // Creamos una tarjeta con todos los repuestos de esa categoría.
+        const tarjeta = crearTarjetaRepuesto(categoria,categorias[categoria]);
+
+        // Añadimos la tarjeta al HTML.
+        listado.append(tarjeta);
+    }
+
+    // Mostramos el número total de repuestos.
+    document.querySelector("#resumen").textContent =
+        "Total de repuestos: " + lista.length;
+
+    // Mostramos las estadísticas.
+    document.querySelector("#estadisticas").textContent =
+        "Categorías: " + Object.keys(categorias).length;
 }
 
-
-
-// ==========================================
-// SPRINT 1 - SESIÓN 11
-// RETO 2: BUSCADOR Y ORDENACIÓN
-// ==========================================
+// RETO 2. BUSCADOR Y ORDENACIÓN
 
 let textoBuscado = "";
 let criterioOrdenacion = "ninguno";
@@ -568,7 +546,7 @@ function pintarResumen(mostrados) {
     if (mostrados > 0) {
         resumen.textContent = `Mostrando ${mostrados} de ${repuestos.length} repuestos`;
     } else {
-        resumen.textContent = `No hay repuestos que contengan "${textoBuscado}".`;
+        resumen.textContent = "No hay repuestos que coincidan con la búsqueda";
     }
 }
 
@@ -594,6 +572,12 @@ function leerCookie(nombre) {
     return null;
 }
 
+function elegirOrden(nuevo) {
+    criterioOrdenacion = nuevo;
+    guardarCookie("orden", criterioOrdenacion, 30);
+    actualizarListado();
+}
+
 // A3. Recuperamos el último orden guardado.
 criterioOrdenacion = leerCookie("orden") || "ninguno";
 
@@ -604,7 +588,7 @@ criterioOrdenacion = leerCookie("orden") || "ninguno";
 
 // B2. Funciones para las fechas.
 
-const DIAS_MES = 30;
+const DIAS_RECIENTE = 30;
 
 // Convertimos la fecha en una fecha correcta.
 function fechaCorrecta(texto) {
@@ -696,3 +680,10 @@ formulario.addEventListener("submit", function(event) {
     // Mostramos un mensaje de confirmación.
     alert("¡Repuesto añadido correctamente!");
 });
+
+
+//Sprint2 Ut4
+
+
+
+
