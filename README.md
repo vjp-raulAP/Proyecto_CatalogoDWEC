@@ -16,7 +16,7 @@ Aplicación para consultar y gestionar un catálogo de repuestos de coches, con 
 - `precio`: precio en euros.
 - `fecha`: fecha.
 
-## Trabajo realizado en el Sprint 0
+# Trabajo realizado en el Sprint 0
 
 ### Sesión 6: Preparación del proyecto
 
@@ -39,21 +39,67 @@ Aplicación para consultar y gestionar un catálogo de repuestos de coches, con 
 - Cálculo del precio total, precio medio y repuesto más caro.
 - Listado de repuestos con sus datos principales.
 
+# Trabajo realizado en el Sprint 1
+
+### Sesión 10: La colección en la página
+
+- Creación de la estructura HTML de la aplicación.
+- Creación de la carpeta `css` y la hoja de estilos `estilos.css`.
+- Creación de tarjetas dinámicamente mediante JavaScript.
+- Uso de `createElement()`, `textContent` y `append()`.
+- Actualización del contenido mediante `replaceChildren()`.
+- Visualización de la colección de repuestos en la página.
+- Incorporación del resumen con el número de repuestos y las categorías.
+
+### Sesión 11: Buscador y ordenación
+
+- Incorporación de un buscador para localizar repuestos por nombre.
+- Filtrado dinámico mientras se escribe mediante el evento `input`.
+- Ordenación alfabética por nombre.
+- Ordenación por precio.
+- Creación de una función para actualizar el listado.
+- Incorporación de un resumen que indica cuántos repuestos se muestran respecto al total.
+
+### Sesión 12: Cookies, fechas y expresiones regulares
+
+- Creación de funciones para guardar y leer cookies.
+- Almacenamiento del último criterio de ordenación seleccionado.
+- Recuperación del orden guardado al recargar la página.
+- Incorporación y tratamiento de fechas en formato `AAAA-MM-DD`.
+- Conversión de fechas a un formato legible.
+- Cálculo de los días transcurridos desde una fecha.
+- Destacado visual de los repuestos recientes (últimos 30 días).
+- Incorporación de la ordenación por fecha, mostrando primero los más recientes.
+- Práctica de expresiones regulares para validar datos.
+
+### Sesión 13: Validación y entrega del Sprint 1
+
+- Incorporación de un formulario para añadir nuevos repuestos.
+- Validación del nombre mediante una expresión regular.
+- Comprobación de que el nombre tenga entre 3 y 40 letras o espacios.
+- Uso de `event.preventDefault()` para evitar la recarga de la página.
+- Muestra de un aviso cuando el nombre no cumple el patrón.
+- Incorporación del nuevo repuesto mediante la función `anadir()`.
+- Actualización automática del listado después de añadir un repuesto.
+- Preparación y revisión final del proyecto para la entrega y defensa del Sprint 1.
+
 ## ¿Cómo se ejecuta?
 
 1. Descargar o clonar el repositorio de GitHub.
 2. Abrir la carpeta del proyecto en Visual Studio Code.
 3. Abrir `index.html` en el navegador, preferiblemente con Live Server.
-4. Pulsar `F12` y acceder a la pestaña **Console** para consultar los resultados.
+4. Pulsar `F12` y acceder a la pestaña **Console** para consultar posibles errores.
 
 ## Uso de IA
 
-Se ha utilizado ChatGPT como herramienta de apoyo para comprender conceptos de JavaScript, resolver dudas y revisar errores.
+Se ha utilizado ChatGPT como herramienta de apoyo para comprender conceptos de JavaScript, resolver dudas, revisar errores y mejorar el código del proyecto.
 
 ## Herramientas utilizadas
 
 - **HTML:** estructura de la página.
-- **JavaScript:** gestión de los datos.
+- **CSS:** diseño y presentación de la aplicación.
+- **JavaScript:** gestión de los datos, funciones e interactividad.
 - **Visual Studio Code:** edición del código.
 - **Git y GitHub:** control de versiones y almacenamiento del proyecto.
-- **Consola del navegador:** comprobación de los resultados.
+- **Live Server:** ejecución de la aplicación en un servidor local.
+- **Consola del navegador:** comprobación y depuración del código.

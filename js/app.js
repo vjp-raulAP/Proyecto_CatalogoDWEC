@@ -342,6 +342,9 @@ console.log("Reto 3. PARTE C");
 //Reto3. Estadísticas de lso repuestos
 console.log("Funcion 5. estadisticas(lista)");
 
+
+//FUNCION CALCULAR ESTADISTICAS DE LOS REPUESTOS
+
 function estadisticas(lista) {
 
     // Comprobamos si la lista está vacía.
@@ -383,11 +386,36 @@ estadisticas(repuestos);
 console.log("-----Prueba con lista vacia----")
 estadisticas([]);
 
+//FUNCION PINTAR ESTADISTICAS
+
+// Función para mostrar las estadísticas en la página.
+function pintarEstadisticas(lista) {
+
+    // Obtenemos las estadísticas.
+    const resultado = estadisticas(lista);
+
+    // Buscamos el elemento donde mostraremos los resultados.
+    const elemento = document.querySelector("#estadisticas");
+
+    // Comprobamos si hay repuestos.
+    if (resultado === null) {
+        elemento.textContent = "No hay repuestos para mostrar estadísticas.";
+        return;
+    }
+
+    // Mostramos las estadísticas en una sola línea.
+    elemento.textContent = `Precio total: ${resultado.total.toFixed(2)} € | Precio medio: ${resultado.media.toFixed(2)} € | Repuesto más caro: ${resultado.maximo.nombre} (${resultado.maximo.precio.toFixed(2)} €)`;
+}
 
 
 
-
- // SPRINT 1. PINTAR COLECCION
+ // ==========================================
+// SPRINT 1 - SESIÓN 10 
+// RETO 2: TU COLECCIÓN EN LA PÁGINA
+// ==========================================
+// Días que consideramos para marcar un repuesto como reciente.
+const DIAS_RECIENTE = 30;
+// Seleccionamos el contenedor donde aparecerán las tarjetas.
 const listado = document.querySelector("#listado");
  // Función para crear una tarjeta de una categoría.
 function crearTarjetaRepuesto(categoria, listaRepuestos) {
@@ -429,8 +457,7 @@ function crearTarjetaRepuesto(categoria, listaRepuestos) {
     return tarjeta;
 }
 
-
-// Función para mostrar los repuestos agrupados por categoría.
+// Función para mostrar los repuestos.
 function mostrarRepuestos(lista) {
 
     // Vaciamos el contenedor de tarjetas.
@@ -475,9 +502,8 @@ function mostrarRepuestos(lista) {
 let textoBuscado = "";
 let criterioOrdenacion = "ninguno";
 
+//FUNCION PARA ORDENAR REPUESTOS POR NOMBRE, PRECIO O FECHA
 
-
-// Función para ordenar los repuestos.
 function ordenarRepuestos(lista, criterio) {
     const copia = [...lista];
 
@@ -494,14 +520,17 @@ function ordenarRepuestos(lista, criterio) {
     return copia;
 }
 
-// Función para buscar repuestos por nombre.
+
+//FUNCION PARA BUSCAR REPUESTOS POR NOMBRE
+
 function buscarRepuestos(lista, texto) {
     return lista.filter(repuesto =>
         repuesto.nombre.toLowerCase().includes(texto.toLowerCase())
     );
 }
 
-// Función para actualizar el listado.
+//FUNCION PARA ACTUALIZAR EL LISTADO DE REPUESTOS
+
 function actualizarListado() {
     let listaFiltrada = buscarRepuestos(repuestos, textoBuscado);
 
@@ -524,7 +553,8 @@ buscadorReto2.addEventListener("input", function () {
     actualizarListado();
 });
 
-// Función para elegir el orden.
+//FUNCION PARA ELEGIR EL CRITERIO DE ORDENACIÓN Y GUARDARLO EN UNA "COOKIE"""
+
 function elegirOrden(nuevo) {
     criterioOrdenacion = nuevo;
     guardarCookie("orden", criterioOrdenacion, 30);
@@ -578,15 +608,13 @@ function elegirOrden(nuevo) {
     actualizarListado();
 }
 
-// A3. Recuperamos el último orden guardado.
+//MANTENER EL CRITERIO DE ORDENACION AL RECARGAR LA PÁGINA
+
 criterioOrdenacion = leerCookie("orden") || "ninguno";
 
-// Actualizamos el listado.
 
 
-
-
-// B2. Funciones para las fechas.
+//FUCION PARA CALCULAR LOS DÍAS QUE HAN PASADO DESDE UNA FECHA
 
 const DIAS_RECIENTE = 30;
 
@@ -598,8 +626,7 @@ function fechaCorrecta(texto) {
 // Convertimos la fecha a formato legible.
 function fechaLegible(texto) {
     return fechaCorrecta(texto).toLocaleDateString("es-ES", {
-        day: "numeric",month: "long",
-        year: "numeric"
+        day: "numeric",month: "long", year: "numeric"
     });
 }
 
@@ -613,6 +640,9 @@ function diasDesde(texto) {
 }
 
 actualizarListado();
+
+
+
 
 // VALIDACIÓN Y FORMULARIO PARA AÑADIR REPUESTOS
 
