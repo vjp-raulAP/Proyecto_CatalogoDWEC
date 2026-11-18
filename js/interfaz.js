@@ -1,5 +1,6 @@
 import { repuestos } from "./datos.js";
 import { buscarRepuestos, ordenarRepuestos, anadir, estadisticas, fechaLegible, diasDesde, DIAS_RECIENTE } from "./logica.js";
+//import  Repuesto  from "./repuesto.js";
 
  // SPRINT 1. PINTAR COLECCION
 const listado = document.querySelector("#listado");
@@ -25,6 +26,9 @@ function crearTarjetaRepuesto(categoria, listaRepuestos) {
         const datos = document.createElement("p");
         datos.textContent =
             `${repuesto.nombre} · ${repuesto.marca} · ${repuesto.precio} €`;
+        // Texto de la tarjeta, generado por el método de la clase.
+        //const datos = document.createElement("p");
+        //datos.textContent = repuesto.descripcion();
 
         // Creamos el párrafo de la fecha.
         const fecha = document.createElement("p");
@@ -251,3 +255,9 @@ formulario.addEventListener("submit", function(event) {
     // Mostramos un mensaje de confirmación.
     alert("¡Repuesto añadido correctamente!");
 });
+
+
+//const repuestos = [];
+    //for (const datos of datosRepuestos) {
+    //repuestos.push(new Repuesto(datos));
+//}

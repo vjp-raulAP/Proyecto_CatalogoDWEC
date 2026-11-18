@@ -414,7 +414,7 @@ function pintarEstadisticas(lista) {
 // RETO 2: TU COLECCIÓN EN LA PÁGINA
 // ==========================================
 // Días que consideramos para marcar un repuesto como reciente.
-const DIAS_RECIENTE = 30;
+const DIAS_RECIENTEs = 30;
 // Seleccionamos el contenedor donde aparecerán las tarjetas.
 const listado = document.querySelector("#listado");
  // Función para crear una tarjeta de una categoría.
